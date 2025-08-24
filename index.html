@@ -98,7 +98,7 @@
   <div class="container">
     <h1>Email Extractor</h1>
     <p>Paste Salesforce email addresses below:</p>
-    <textarea id="input" placeholder='"Jane Doe" <jane@example.com>; "John Smith" <john@example.com>'></textarea>
+    <textarea id=Paste Emails Here></textarea>
     <br />
     <button onclick="extractEmails()">Extract & Copy</button>
     <div id="status">Copied to clipboard!</div>
@@ -111,7 +111,9 @@
       // === BLACKLIST: Add emails here to exclude ===
       const blacklist = [
         'routing@wwex.com',
-        // Add more like 'spam@example.com', 'noreply@company.com'
+        'sale@wwex.com',
+        'freight@sales.com',
+        // Add more above 
       ];
 
       // Extract emails via regex
@@ -145,3 +147,4 @@
   </script>
 </body>
 </html>
+
