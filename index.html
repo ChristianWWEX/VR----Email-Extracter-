@@ -1,152 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Extractor</title>
-  <style>
-    /* ===== Reset and Dark Theme ===== */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    /* ===== Card Container ===== */
-    .container {
-      background-color: #1e1e1e;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    p {
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      color: #aaa;
-    }
-
-    /* ===== Textarea ===== */
-    textarea {
-      width: 90%;
-      height: 140px;
-      background-color: #2a2a2a;
-      color: #e0e0e0;
-      border: none;
-      outline: none;
-      resize: none;
-      padding: 1rem;
-      font-size: 0.95rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      transition: background-color 0.3s;
-    }
-
-    textarea:focus {
-      background-color: #333;
-    }
-
-    /* ===== Button ===== */
-    button {
-      background-color: #6200ee;
-      color: white;
-      border: none;
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.1s;
-    }
-
-    button:hover {
-      background-color: #7c28ff;
-    }
-
-    button:active {
-      transform: scale(0.97);
-    }
-
-    /* ===== Status Message ===== */
-    #status {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-    }
-
-    #status.show {
-      opacity: 1;
-      color: #4caf50;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Email Separator Converter</title>
+<style>
+   /* === DARK THEME STYLING === */
+   body {
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     background-color: #121212;
+     color: #ffffff;
+     max-width: 700px;
+     margin: 40px auto;
+     padding: 0 1rem;
+     text-align: center;
+   }
+   h1 {
+     font-size: 2rem;
+     margin-bottom: 1rem;
+     color: #4FC3F7;
+   }
+   p {
+     font-size: 1rem;
+     margin-bottom: 1rem;
+     color: #BBBBBB;
+   }
+   textarea {
+     width: 90%;
+     height: 180px;
+     margin-bottom: 1rem;
+     font-size: 1rem;
+     background-color: #1E1E1E;
+     color: #FFFFFF;
+     border: 1px solid #333;
+     border-radius: 6px;
+     padding: 10px;
+     resize: vertical;
+   }
+   button {
+     background-color: #4FC3F7;
+     color: #121212;
+     border: none;
+     border-radius: 6px;
+     padding: 0.7rem 1.2rem;
+     font-size: 1rem;
+     font-weight: bold;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+   }
+   button:hover {
+     background-color: #03A9F4;
+   }
+   #status {
+     margin-top: 1rem;
+     font-size: 0.95rem;
+   }
+   .success {
+     color: #4CAF50;
+   }
+   .error {
+     color: #F44336;
+   }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Email Extractor</h1>
-    <p>Paste Salesforce email addresses below:</p>
-    <textarea id="input" placeholder='"Wwex" <wwex@example.com>; "John Smith" <john@example.com>'></textarea>
-    <br />
-    <button onclick="extractEmails()">Extract & Copy</button>
-    <div id="status">Copied to clipboard!</div>
-  </div>
-
-  <script>
-    function extractEmails() {
-      const input = document.getElementById('input').value;
-
-      // === BLACKLIST: Add emails here to exclude ===
-      const blacklist = [
-        'routing@wwex.com',
-        // Add more like 'spam@example.com', 'noreply@company.com'
-      ];
-
-      // Extract emails via regex
-      const emails = input.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}/g);
-
-      if (!emails || emails.length === 0) {
-        showStatus('No emails found!', false);
-        return;
-      }
-
-      // Remove blacklisted emails and duplicates
-      const filtered = [...new Set(emails.filter(e => !blacklist.includes(e.toLowerCase())))];
-      const cleaned = filtered.join(', ');
-
-      // Replace textarea with cleaned output
-      document.getElementById('input').value = cleaned;
-
-      // Copy to clipboard
-      navigator.clipboard.writeText(cleaned).then(() => {
-        showStatus('Copied to clipboard!', true);
-      });
-    }
-
-    function showStatus(message, success) {
-      const status = document.getElementById('status');
-      status.textContent = message;
-      status.style.color = success ? '#4caf50' : '#ff5252';
-      status.classList.add('show');
-      setTimeout(() => status.classList.remove('show'), 2000);
-    }
-  </script>
+<h1>Email Separator Converter</h1>
+<p>Paste your Salesforce email thread below:</p>
+<textarea id="input" placeholder="Paste here..."></textarea>
+<br />
+<button onclick="extractEmails()">Convert & Copy</button>
+<div id="status"></div>
+<script>
+   function extractEmails() {
+     const input = document.getElementById('input').value;
+     // === BLACKLIST: Add emails here to exclude (case-insensitive) ===
+     const blacklist = [
+       'routing@wwex.com',
+       // Add more emails here
+     ];
+     // Extract emails (case-insensitive)
+     const emails = input.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}/gi);
+     if (!emails || emails.length === 0) {
+       showStatus('No emails found!', false);
+       return;
+     }
+     // Remove blacklisted emails (case-insensitive)
+     const filtered = emails.filter(email =>
+       !blacklist.includes(email.toLowerCase())
+     );
+     // Remove duplicates ignoring case
+     const unique = [];
+     const seen = new Set();
+     for (const email of filtered) {
+       const lower = email.toLowerCase();
+       if (!seen.has(lower)) {
+         seen.add(lower);
+         unique.push(email);
+       }
+     }
+     // Sort so @weex emails appear first
+     unique.sort((a, b) => {
+       const aWeex = a.toLowerCase().endsWith('@weex');
+       const bWeex = b.toLowerCase().endsWith('@weex');
+       return aWeex === bWeex ? 0 : aWeex ? -1 : 1;
+     });
+     // Final comma-separated string
+     const cleaned = unique.join(', ');
+     // Replace textarea with cleaned output
+     document.getElementById('input').value = cleaned;
+     // Copy to clipboard
+     navigator.clipboard.writeText(cleaned).then(() => {
+       showStatus('Copied to clipboard!', true);
+     });
+   }
+   function showStatus(message, success = true) {
+     const status = document.getElementById('status');
+     status.textContent = message;
+     status.className = success ? 'success' : 'error';
+     setTimeout(() => { status.textContent = ''; }, 3000);
+   }
+</script>
 </body>
 </html>
-
-
-
